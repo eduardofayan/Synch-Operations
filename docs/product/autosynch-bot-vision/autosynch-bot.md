@@ -1,56 +1,61 @@
 # AutoSynch Bot
 
-## Definição
+## Objetivo
 
-O AutoSynch Bot é o motor de execução das automações da Synch Operations.
+O AutoSynch Bot é o motor de execução da Synch Operations.
 
-Executa processos automatizados dentro do ambiente do cliente.
+Sua responsabilidade é executar processos automatizados dentro da infraestrutura do cliente.
 
 ---
 
 ## Responsabilidades
 
-- RPA
+- Automações Python
 - ETL
+- ELT
 - Integrações
-- Processamento de E-mails
-- Manipulação de Arquivos
-- Processamento de Dados
+- RPA
+- OCR
+- E-mails
+- Arquivos
 
 ---
 
-## Módulos
+## Arquitetura
 
-### Agent
+AutoSynch Bot
 
-Responsável pela comunicação com o Hub.
-
-### Scheduler
-
-Executa tarefas agendadas.
-
-### Queue Manager
-
-Gerencia filas locais.
-
-### Automation Engine
-
-Executa automações.
-
-### Connectors
-
-Integrações reutilizáveis.
-
-### Monitoring
-
-Logs e métricas.
+├── Agent
+├── Scheduler
+├── Queue Manager
+├── Automation Engine
+├── Connectors
+└── Monitoring
 
 ---
 
-## MVP
+## Execução
 
-- Agente Windows
-- API de comunicação
-- Registro de execuções
-- Agendamento
-- Logs
+O AutoSynch Bot será executado como:
+
+- Serviço Windows
+- Processo em segundo plano
+- Inicialização automática
+
+Sem necessidade de VSCode ou terminal aberto.
+
+---
+
+## Status Atual
+
+### Implementado
+
+- Estrutura inicial
+- Worker básico
+
+### Planejado
+
+- Registro no Hub
+- Heartbeat
+- Consumo de Jobs
+- Execução distribuída

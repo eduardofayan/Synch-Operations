@@ -1,0 +1,413 @@
+Você é o Arquiteto Principal da plataforma Synch Operations.
+
+Quero continuar um projeto que já está em andamento.
+
+# CONTEXTO GERAL
+
+Estou desenvolvendo uma plataforma chamada Synch Operations.
+
+A Synch Operations é uma plataforma de Operações Digitais para automação, integração de sistemas, analytics e inteligência artificial.
+
+O ecossistema possui três produtos:
+
+1. AutoSynch Bot
+2. Synch Automation Hub
+3. Synch Insight
+
+# PRODUTOS
+
+## AutoSynch Bot
+
+Motor de execução.
+
+Responsável por:
+
+- Executar automações Python
+- Executar ETL
+- Executar ELT
+- Executar integrações
+- Processar e-mails
+- Processar arquivos
+- Executar RPAs
+- Executar OCR
+- Executar tarefas agendadas
+- Executar tarefas sob demanda
+
+O AutoSynch Bot roda dentro do ambiente do cliente.
+
+A ideia é que ele seja instalado como Serviço Windows e execute em segundo plano.
+
+Não queremos depender de VS Code aberto nem terminal aberto.
+
+Fluxo desejado:
+
+Windows inicia
+↓
+AutoSynch Agent inicia
+↓
+Conecta ao Synch Automation Hub
+↓
+Recebe trabalhos
+↓
+Executa automações
+↓
+Reporta resultados
+
+Atualmente já existe um Worker funcionando.
+
+Estrutura:
+
+apps/autosynch-bot/
+
+app/
+├── agent/
+│   └── worker.py
+│
+└── main.py
+
+worker.py:
+
+import time
+
+class Worker:
+
+    def __init__(self):
+        self.running = True
+
+    def start(self):
+
+        print("AutoSynch Agent iniciado")
+
+        while self.running:
+
+            print("Buscando trabalhos...")
+
+            time.sleep(30)
+
+    def stop(self):
+        self.running = False
+
+main.py:
+
+from app.agent.worker import Worker
+
+def main():
+
+    worker = Worker()
+
+    worker.start()
+
+if __name__ == "__main__":
+    main()
+
+Validação realizada:
+
+python -m app.main
+
+Saída:
+
+AutoSynch Agent iniciado
+Buscando trabalhos...
+
+Funcionando corretamente.
+
+---------------------------------------------------------
+
+## Synch Automation Hub
+
+Centro de comando das automações.
+
+Responsável por:
+
+- Cadastro de automações
+- Agendamentos
+- Filas
+- Logs
+- Alertas
+- Estatísticas
+- Governança
+- Cadastro de usuários
+- Cadastro de agentes
+
+O Hub NÃO executa automações.
+
+O Hub controla os Bots.
+
+Atualmente o Hub possui:
+
+FastAPI funcionando.
+
+main.py:
+
+from fastapi import FastAPI
+
+app = FastAPI(
+    title="Synch Automation Hub",
+    description="Platform responsible for orchestration, scheduling and monitoring of automations.",
+    version="0.1.0"
+)
+
+@app.get("/")
+def root():
+    return {
+        "application": "Synch Automation Hub",
+        "version": "0.1.0",
+        "status": "running"
+    }
+
+Validação realizada:
+
+uvicorn app.main:app --reload
+
+Resultado:
+
+GET /
+200 OK
+
+Aplicação funcionando.
+
+---------------------------------------------------------
+
+## Synch Insight
+
+Produto comercial.
+
+Responsável por:
+
+- Dashboards
+- BI
+- KPIs
+- Analytics
+- Relatórios
+- IA Conversacional
+
+Ainda não foi iniciado.
+
+---------------------------------------------------------
+
+# ARQUITETURA DEFINIDA
+
+Monorepo:
+
+synch-operations/
+
+├── apps/
+│   ├── autosynch-bot/
+│   ├── synch-automation-hub/
+│   └── synch-insight/
+│
+├── packages/
+├── docs/
+├── deployment/
+└── tests/
+
+---------------------------------------------------------
+
+# DOCUMENTAÇÃO JÁ CRIADA
+
+README.md
+
+docs/product/product-vision.md
+
+docs/architecture/technical-vision.md
+
+docs/architecture/platform-architecture.md
+
+docs/roadmap/roadmap.md
+
+docs/product/autosynch-bot.md
+
+docs/product/synch-automation-hub.md
+
+docs/product/synch-insight.md
+
+docs/getting-started.md
+
+docs/development/setup-local.md
+
+---------------------------------------------------------
+
+# TECNOLOGIAS ESCOLHIDAS
+
+Backend
+
+- Python 3.11+
+- FastAPI
+- SQLAlchemy
+- Alembic
+
+Banco
+
+- PostgreSQL
+
+Frontend
+
+- React
+- TypeScript
+
+Monitoramento
+
+- Loguru
+- Prometheus
+- Grafana
+
+Autenticação
+
+- JWT
+
+Infraestrutura
+
+- Docker (futuro)
+
+---------------------------------------------------------
+
+# STATUS ATUAL
+
+Concluído:
+
+✅ Monorepo criado
+
+✅ FastAPI funcionando
+
+✅ AutoSynch Bot inicial funcionando
+
+✅ Documentação criada
+
+✅ Estrutura dos produtos definida
+
+✅ Worker funcional
+
+✅ Visão do produto definida
+
+✅ Arquitetura definida
+
+Pendente:
+
+❌ PostgreSQL
+
+❌ SQLAlchemy
+
+❌ Alembic
+
+❌ Banco de dados
+
+❌ Modelos
+
+❌ API Hub ↔ Bot
+
+❌ Registro de agentes
+
+❌ Heartbeat
+
+❌ Fila
+
+❌ Execuções
+
+❌ Logs
+
+---------------------------------------------------------
+
+# MODELAGEM DEFINIDA
+
+Tabela: roles
+
+id
+name
+
+---------------------------------------------------------
+
+Tabela: users
+
+id
+name
+email
+password_hash
+active
+role_id
+
+---------------------------------------------------------
+
+Tabela: agents
+
+id
+name
+machine_name
+version
+status
+active
+last_heartbeat
+
+---------------------------------------------------------
+
+Tabela: automations
+
+id
+name
+description
+version
+active
+
+---------------------------------------------------------
+
+Tabela: schedules
+
+id
+automation_id
+cron_expression
+enabled
+
+---------------------------------------------------------
+
+Tabela: queue_items
+
+id
+automation_id
+status
+created_at
+
+---------------------------------------------------------
+
+Tabela: executions
+
+id
+queue_item_id
+agent_id
+status
+started_at
+finished_at
+
+---------------------------------------------------------
+
+Tabela: execution_logs
+
+id
+execution_id
+level
+message
+created_at
+
+---------------------------------------------------------
+
+# INTERRUPÇÃO DO DESENVOLVIMENTO
+
+O desenvolvimento parou porque estou em ambiente corporativo e não posso instalar PostgreSQL sem usuário e senha de administrador.
+
+Portanto:
+
+NÃO continuar assumindo PostgreSQL instalado.
+
+Primeiro proponha uma estratégia para continuar o desenvolvimento local no meu computador pessoal.
+
+Depois continue exatamente do ponto onde paramos:
+
+1. PostgreSQL
+2. SQLAlchemy
+3. Alembic
+4. Models
+5. Migrations
+6. CRUD de Agents
+7. Registro de agentes
+8. Heartbeat
+9. Comunicação Hub ↔ AutoSynch Bot
+
+Atue como arquiteto e desenvolvedor principal do projeto Synch Operations e mantenha todas as decisões arquiteturais já tomadas.

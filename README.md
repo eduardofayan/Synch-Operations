@@ -1,68 +1,148 @@
 # Synch Operations
 
-Synch Operations is a proposed digital operations platform connecting automation,
-data integration, analytics, and AI for industrial operations and logistics.
+Plataforma de Operações Digitais que conecta Automação, Integração de Dados, Analytics e Inteligência Artificial em um único ecossistema.
 
-| Product | Responsibility |
-| --- | --- |
-| AutoSynch Bot | Executes automation in the customer's environment and reports results. |
-| Synch Automation Hub | Catalogs, schedules, dispatches, governs, and observes work; it does **not** execute customer automations. |
-| Synch Insight | Presents operational analytics, reports, and a governed AI assistant. |
+---
 
-## Status
+## Visão Geral
 
-This repository contains the initial architecture and reserved directories, not
-an implemented or production-ready platform. There are no runnable services,
-install instructions, dependencies, or automated tests yet. The architecture
-describes intended behavior and controls to implement and validate before a
-production deployment.
+O ecossistema Synch Operations é composto por três produtos principais:
 
-## Repository layout
+### AutoSynch Bot
+
+Motor de execução responsável por:
+
+- Automações Python
+- RPA
+- ETL
+- Integrações
+- Processamento de arquivos
+- Processamento de e-mails
+
+Executado localmente no ambiente do cliente.
+
+---
+
+### Synch Automation Hub
+
+Centro de comando operacional.
+
+Responsável por:
+
+- Cadastro de automações
+- Agendamentos
+- Filas
+- Logs
+- Monitoramento
+- Governança
+
+O Hub não executa automações.
+
+---
+
+### Synch Insight
+
+Plataforma de inteligência operacional.
+
+Responsável por:
+
+- Dashboards
+- Analytics
+- KPIs
+- Relatórios
+- Assistente Inteligente
+
+---
+
+## Arquitetura
+
+Cliente
+
+↓
+
+AutoSynch Bot
+
+↓
+
+Synch Automation Hub
+
+↓
+
+Data Platform
+
+↓
+
+Synch Insight
+
+↓
+
+AI Assistant
+
+---
+
+## Estrutura do Repositório
 
 ```text
-synch-operations/
-├── apps/
-│   ├── autosynch-bot/           # Customer-side execution agent
-│   ├── synch-automation-hub/    # Control plane and administration
-│   └── synch-insight/           # Customer analytics and assistant
-├── packages/
-│   ├── connectors/              # Reusable, controlled system adapters
-│   ├── shared/                  # Versioned contracts and common primitives
-│   ├── database/                # Persistence models and migrations
-│   ├── logging/                 # Structured logging conventions
-│   ├── security/                # Identity, authorization, and secret interfaces
-│   └── ai/                      # Governed model and retrieval adapters
-├── docs/
-│   ├── architecture/            # Architecture and technical vision
-│   ├── product/                 # Product vision
-│   ├── roadmap/                 # Delivery phases and exit criteria
-│   └── diagrams/                # Future maintained diagrams
-├── deployment/
-│   ├── docker/                  # Future container definitions
-│   ├── windows/                 # Future Windows agent deployment
-│   └── linux/                   # Future Linux deployment
-├── tests/                       # Future cross-product and contract tests
-├── README.md
-├── CONTRIBUTING.md
-└── LICENSE
+apps/
+
+├── autosynch-bot/
+├── synch-automation-hub/
+└── synch-insight/
+
+packages/
+docs/
+deployment/
+tests/
 ```
 
-Empty directories are kept with `.gitkeep` files. Application-specific tests
-should live with their applications; `tests/` is for integration, end-to-end,
-and contract tests spanning boundaries.
+## Tecnologias
 
-## Architecture and delivery
+### Backend
 
-- [Technical vision](docs/architecture/technical-vision.md)
-- [Domain, component, data, and deployment architecture](docs/architecture/platform-architecture.md)
-- [Product vision](docs/product/product-vision.md)
-- [MVP, version 1, and enterprise roadmap](docs/roadmap/roadmap.md)
-- [Contributing](CONTRIBUTING.md)
+- Python 3.12
+- FastAPI
+- SQLAlchemy
+- PostgreSQL
 
-The target stack is Python 3.12, FastAPI, PostgreSQL, SQLAlchemy, JWT,
-APScheduler, Docker, Prometheus, Grafana, Loguru, React and TypeScript, with
-Power BI and Apache Superset integration and OpenAI/Azure OpenAI via a
-governed LangChain-compatible AI layer. These are design choices, not installed
-or operational components.
+### Frontend
 
-No license has yet been selected; see [LICENSE](LICENSE).
+- React
+- TypeScript
+
+### Observabilidade
+
+- Loguru
+- Prometheus
+- Grafana
+
+### Inteligência Artificial
+
+- OpenAI
+- Azure OpenAI
+- LangChain
+
+---
+
+## Status Atual
+
+### Concluído
+
+- Estrutura do monorepo
+- Documentação inicial
+- Primeiro serviço FastAPI
+- Primeiro AutoSynch Worker
+
+### Em Desenvolvimento
+
+- PostgreSQL
+- SQLAlchemy
+- Gestão de Agentes
+- API Hub ↔ Bot
+
+---
+
+## Roadmap
+
+Consulte:
+
+docs/roadmap/roadmap.md
