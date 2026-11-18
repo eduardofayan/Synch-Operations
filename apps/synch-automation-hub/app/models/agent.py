@@ -19,28 +19,33 @@ class Agent(Base):
     )
 
     name: Mapped[str] = mapped_column(
-        String(100)
+        String(100),
+        nullable=False
     )
 
     machine_name: Mapped[str] = mapped_column(
-        String(150)
+        String(150),
+        nullable=False
     )
 
     version: Mapped[str] = mapped_column(
-        String(20)
+        String(20),
+        nullable=False
     )
 
     status: Mapped[str] = mapped_column(
         String(20),
-        default="offline"
+        default="offline",
+        nullable=False
     )
 
     active: Mapped[bool] = mapped_column(
         Boolean,
-        default=True
+        default=True,
+        nullable=False
     )
 
     last_heartbeat: Mapped[datetime] = mapped_column(
         DateTime,
-        nullable=True
+        nullable=False
     )

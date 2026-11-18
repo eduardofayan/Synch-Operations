@@ -17,7 +17,8 @@ class Automation(Base):
     )
 
     name: Mapped[str] = mapped_column(
-        String(150)
+        String(150),
+        nullable=False
     )
 
     description: Mapped[str] = mapped_column(

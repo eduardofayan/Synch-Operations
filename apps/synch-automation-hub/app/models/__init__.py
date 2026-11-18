@@ -6,3 +6,4 @@ from app.models.schedule import Schedule
 from app.models.queue_item import QueueItem
 from app.models.execution import Execution
 from app.models.execution_log import ExecutionLog
+from app.models.tenant import Tenant
