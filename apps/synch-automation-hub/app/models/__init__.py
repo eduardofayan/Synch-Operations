@@ -1,6 +1,6 @@
 from app.models.role import Role
 from app.models.user import User
-from app.models.agent import Agent
+from app.models.bots import Bots
 from app.models.automation import Automation
 from app.models.schedule import Schedule
 from app.models.queue_item import QueueItem

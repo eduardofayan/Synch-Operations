@@ -23,7 +23,7 @@ class Execution(Base):
     )
 
     agent_id: Mapped[int] = mapped_column(
-        ForeignKey("agents.id")
+        ForeignKey("bots.id")
     )
 
     status: Mapped[str] = mapped_column(
