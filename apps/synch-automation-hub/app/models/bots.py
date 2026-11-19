@@ -12,7 +12,7 @@ from app.database.base import Base
 from typing import Optional
 
 # Classe que representa um bot no sistema
-class Bots(Base):
+class Bot(Base):
 
     # Nome da tabela no banco de dados que representa os bots
     __tablename__ = "bots"

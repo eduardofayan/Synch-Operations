@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from app.api.bots import router as bots_router
 
 app = FastAPI(
     title="Synch Automation Hub",
@@ -13,3 +14,7 @@ def root():
         "version": "0.1.0",
         "status": "running"
     }
+
+app.include_router(
+    bots_router
+)

@@ -22,7 +22,7 @@ class Execution(Base):
         ForeignKey("queue_items.id")
     )
 
-    agent_id: Mapped[int] = mapped_column(
+    bot_id: Mapped[int] = mapped_column(
         ForeignKey("bots.id")
     )
 
