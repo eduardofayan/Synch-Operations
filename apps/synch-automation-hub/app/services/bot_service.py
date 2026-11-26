@@ -13,7 +13,7 @@ class BotService:
         bot_data
     ):
 
-        return BotRepository.create(
+        return BotRepository.create_or_get(
             db,
             bot_data
         )
@@ -34,4 +34,16 @@ class BotService:
         return BotRepository.update_heartbeat(
             db,
             bot_id
+        )
+
+    # Obtém um bot pelo nome da máquina
+    @staticmethod
+    def get_by_machine_name(
+        db,
+        machine_name
+    ):
+
+        return BotRepository.get_by_machine_name(
+            db,
+            machine_name
         )

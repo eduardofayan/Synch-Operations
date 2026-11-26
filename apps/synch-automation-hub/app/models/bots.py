@@ -30,8 +30,9 @@ class Bot(Base):
     # Nome da máquina onde o bot está rodando
     machine_name: Mapped[str] = mapped_column(
         String(150),
-        nullable=False
-    )
+        nullable=False,
+        unique=True
+)
     
     # Versão do bot
     version: Mapped[str] = mapped_column(
@@ -53,8 +54,8 @@ class Bot(Base):
         nullable=False
     )
 
-    # Último heartbeat recebido do bot
+    # Último heartbeat recebido do bot com base no fuso horário do banco de dados
     last_heartbeat: Mapped[Optional[datetime]] = mapped_column(
-        DateTime,
+        DateTime(timezone=True),
         nullable=True
     )

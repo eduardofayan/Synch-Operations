@@ -6,10 +6,25 @@ class BotRepository:
 
     # Cria um novo bot no banco de dados
     @staticmethod
-    def create(
+    def create_or_get(
         db,
         bot_data
     ):
+
+        existing = (
+            db.query(Bot)
+            .filter(
+                Bot.machine_name ==
+                bot_data.machine_name
+            )
+            .first()
+        )
+
+        if existing:
+            return {
+                "bot": existing,
+                "created": False
+            }
 
         bot = Bot(
             name=bot_data.name,
@@ -24,8 +39,10 @@ class BotRepository:
 
         db.refresh(bot)
 
-        return bot
-
+        return {
+            "bot": bot,
+            "created": True
+        }
     # Obtém todos os bots do banco de dados
     @staticmethod
     def get_all(db):
@@ -68,3 +85,18 @@ class BotRepository:
         db.refresh(bot)
 
         return bot
+
+    # Obtém um bot pelo nome da máquina
+    @staticmethod
+    def get_by_machine_name(
+        db,
+        machine_name: str
+    ):
+
+        return (
+            db.query(Bot)
+            .filter(
+                Bot.machine_name == machine_name
+            )
+            .first()
+        )
